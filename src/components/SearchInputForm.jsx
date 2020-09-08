@@ -5,10 +5,11 @@ import SearchIcon from '@material-ui/icons/Search'
 const useStyles = makeStyles({
   root: {
     width: '400px',
-    padding: '2px 10px',
+    padding: '2px 5px',
     display: 'flex'
   },
   input: {
+    padding: '0 5px',
     flexGrow: 1
   },
 });
