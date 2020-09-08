@@ -52,7 +52,7 @@ const MainPanel = () => {
             anchorOrigin={{vertical: 'bottom', horizontal: 'left'}}
           >
             
-          </Popover>
+        </Popover>
       </Toolbar>
     </AppBar>
   );
