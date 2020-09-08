@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import { makeStyles, Paper, InputBase, IconButton, } from '@material-ui/core';
+import { makeStyles, Paper, InputBase, IconButton, Popover, } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search'
 import AppsIcon from '@material-ui/icons/Apps';
 
@@ -22,13 +22,22 @@ const useStyles = makeStyles({
 });
 
 const MainPanel = () => {
+  const [anchorAppsPopover, setAnchorAppsPopover] = useState(null);
   const classes = useStyles();
+  
+  const handleAppsButtonClick = event => {
+    setAnchorAppsPopover(event.currentTarget);
+  };
+
+  const handleAppsPopoverClosing = () => {
+    setAnchorAppsPopover(null);
+  };
   
   return (
     <AppBar position='fixed'>
       <Toolbar className={classes.toolbar}>
         <Paper className={classes.searchForm}>
-          <IconButton>
+          <IconButton onClick={handleAppsButtonClick}>
             <AppsIcon/>
           </IconButton>
           <InputBase placeholder='Search' className={classes.searchInput}/>
@@ -36,6 +45,14 @@ const MainPanel = () => {
             <SearchIcon/>
           </IconButton>
         </Paper>
+        <Popover 
+            open={Boolean(anchorAppsPopover)}
+            anchorEl={anchorAppsPopover}
+            onClose={handleAppsPopoverClosing}
+            anchorOrigin={{vertical: 'bottom', horizontal: 'left'}}
+          >
+            
+          </Popover>
       </Toolbar>
     </AppBar>
   );
