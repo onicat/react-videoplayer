@@ -1,6 +1,7 @@
 import React from 'react'
 import { Paper, InputBase, IconButton, makeStyles } from '@material-ui/core'
 import SearchIcon from '@material-ui/icons/Search'
+import AppsIcon from '@material-ui/icons/Apps';
 
 const useStyles = makeStyles({
   root: {
@@ -19,6 +20,9 @@ const SearchInputForm = () => {
   
   return (
     <Paper className={classes.root}>
+      <IconButton>
+        <AppsIcon/>
+      </IconButton>
       <InputBase placeholder='Search' className={classes.input}/>
       <IconButton>
         <SearchIcon/>
