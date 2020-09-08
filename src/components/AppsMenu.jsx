@@ -21,13 +21,13 @@ const AppsMenu = () => {
   
   return (
     <div className={classes.root}>
-      <IconButton className={classes.iconButton} size='large'>
+      <IconButton className={classes.iconButton}>
         <StorageIcon fontSize='large'/>
       </IconButton>
-      <IconButton className={classes.iconButton} size='large'>
+      <IconButton className={classes.iconButton}>
         <SettingsIcon fontSize='large'/>
       </IconButton>
-      <IconButton className={classes.iconButton} size='large'>
+      <IconButton className={classes.iconButton}>
         <GitHubIcon fontSize='large'/>
       </IconButton>
     </div>
