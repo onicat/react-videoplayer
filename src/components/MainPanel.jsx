@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
+
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import { makeStyles, Paper, InputBase, IconButton, Popover, } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search'
 import AppsIcon from '@material-ui/icons/Apps';
+import AppsMenu from './AppsMenu';
 
 const useStyles = makeStyles({
   toolbar: {
@@ -51,7 +53,7 @@ const MainPanel = () => {
             onClose={handleAppsPopoverClosing}
             anchorOrigin={{vertical: 'bottom', horizontal: 'left'}}
           >
-            
+            <AppsMenu/>
         </Popover>
       </Toolbar>
     </AppBar>
