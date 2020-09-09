@@ -4,6 +4,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import { makeStyles, InputBase, IconButton, Box, Drawer } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search'
 import StorageIcon from '@material-ui/icons/Storage';
+import FileManager from './FileManager';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -57,7 +58,7 @@ const MainPanel = () => {
           open={isFileManagerVisible}
           onClose={toggleFileManagerDrawer.bind(null, false)}
         >
-          
+          <FileManager/>
         </Drawer>
       </Toolbar>
     </AppBar>
