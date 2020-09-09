@@ -7,7 +7,7 @@ import { makeStyles, Box, Typography, CircularProgress, Divider } from '@materia
 import FolderIcon from '@material-ui/icons/Folder';
 import MovieIcon from '@material-ui/icons/Movie';
 
-import { SERVER_ADDRESSES } from 'logic/constants';
+import urlCreator from 'logic/urlCreator';
 
 const useStyles = makeStyles({
   root: {
@@ -56,7 +56,7 @@ const IconicTreeItem = ({type, text, children, ...props}) => {
   )
 };
 
-const FileManager = () => {
+const FileManager = ({setVideo}) => {
   const classes = useStyles();
   const [responseOkStatus, changeResponseOkStatus] = useState(null);
   const pathsRef = useRef(null);
@@ -96,7 +96,7 @@ const FileManager = () => {
   };
 
   useEffect(() => {
-    fetch(SERVER_ADDRESSES.PATHS)
+    fetch(urlCreator.paths())
       .then(response => {
         return response.json();
       })
