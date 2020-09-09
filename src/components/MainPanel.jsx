@@ -3,7 +3,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import { makeStyles, InputBase, IconButton, Box } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search'
-
+import StorageIcon from '@material-ui/icons/Storage';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,6 +20,11 @@ const useStyles = makeStyles((theme) => ({
   searchInput: {
     width: '400px',
     padding: '0 5px'
+  },
+  storageButton: {
+    position: 'absolute',
+    right: '24px',
+    marginLeft: '0'
   }
 }));
 
@@ -40,6 +45,9 @@ const MainPanel = () => {
             }
           />
         </Box>
+        <IconButton className={classes.storageButton}>
+          <StorageIcon/>
+        </IconButton>
       </Toolbar>
     </AppBar>
   );
