@@ -3,7 +3,7 @@ import TreeView from '@material-ui/lab/TreeView'
 import TreeItem from '@material-ui/lab/TreeItem'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import { makeStyles, Box, Typography, CircularProgress, Paper, Divider } from '@material-ui/core';
+import { makeStyles, Box, Typography, CircularProgress, Divider } from '@material-ui/core';
 import FolderIcon from '@material-ui/icons/Folder';
 import MovieIcon from '@material-ui/icons/Movie';
 
