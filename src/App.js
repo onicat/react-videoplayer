@@ -20,7 +20,6 @@ const App = () => {
       <ThemeProvider theme={theme}>
         <MainPanel></MainPanel>
         <PlayerContainer>
-          <Player/>
         </PlayerContainer>
       </ThemeProvider>
     </React.Fragment>
