@@ -3,16 +3,11 @@ import { makeStyles } from '@material-ui/core';
 import videojs from 'video.js'
 import 'video.js/dist/video-js.css'
 
-import exampleVideo from '../example.mp4'
-
 const options = {
   controls: true,
   loop: false,
   preload: 'auto',
-  fluid: true,
-  sources: [{
-    src: exampleVideo
-  }]
+  fluid: true
 };
 
 const useStyles = makeStyles({
