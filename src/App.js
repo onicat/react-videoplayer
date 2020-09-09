@@ -11,7 +11,6 @@ const PlayerContainer = styled(Box)({
   paddingTop: '64px',
   display: 'flex',
   justifyContent: 'center',
-  alignItems: 'center'
 });
 
 const App = () => {
@@ -20,6 +19,7 @@ const App = () => {
       <ThemeProvider theme={theme}>
         <MainPanel></MainPanel>
         <PlayerContainer>
+          <Player/>
         </PlayerContainer>
       </ThemeProvider>
     </React.Fragment>
