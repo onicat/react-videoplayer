@@ -8,6 +8,7 @@ import FolderIcon from '@material-ui/icons/Folder';
 import MovieIcon from '@material-ui/icons/Movie';
 
 import urlCreator from 'logic/urlCreator';
+import { SEARCH_PARAMS } from 'logic/constants';
 
 const useStyles = makeStyles({
   root: {
@@ -32,12 +33,22 @@ const useStyles = makeStyles({
   }
 });
 
-const IconicTreeItem = ({type, text, children, ...props}) => {
+const IconicTreeItem = ({
+  type,
+  text,
+  children,
+  path,
+  handleVideoItemClick,
+  ...props
+}) => {
   const classes = useStyles();
   const icon = (type === 'folder') ? <FolderIcon/> : <MovieIcon/>;
-  
+
   return (
     <TreeItem
+      onDoubleClick={
+        (type !== 'folder') ? () => handleVideoItemClick(path) : null
+      }
       label={
         <div className={classes.iconicTreeItemLabel}>
           {icon}
@@ -49,6 +60,7 @@ const IconicTreeItem = ({type, text, children, ...props}) => {
           </Typography>
         </div>
       }
+      nodeId={path}
       {...props}
     >
       {children}
@@ -63,18 +75,22 @@ const FileManager = ({setVideo}) => {
   
   let content = null; 
 
-  const renderTreeContent = (paths, currentPath = '') => {
+  const handleVideoItemClick = (path) => {
+    setVideo(urlCreator.videos(SEARCH_PARAMS.PATH, path));
+  };
+
+  const renderTreeContent = (paths, currentPath) => {
     const nodeContent = [];
     
     for (let [nodeName, nodeOptions] of Object.entries(paths)) {
-      const nodePath = `${currentPath}/${nodeName}`;
+      const nodePath = (currentPath) ? `${currentPath}/${nodeName}` : nodeName;
       
       if (nodeOptions.type === 'folder') {
         nodeContent.push(
           <IconicTreeItem 
             text={nodeName}
             type={nodeOptions.type}
-            nodeId={nodePath}
+            path={nodePath}
             key={nodePath}
           >
             {renderTreeContent(nodeOptions.paths, nodePath)}
@@ -85,8 +101,9 @@ const FileManager = ({setVideo}) => {
           <IconicTreeItem
             text={nodeName}
             type={nodeOptions.type}
-            nodeId={nodePath}
+            path={nodePath}
             key={nodePath}
+            handleVideoItemClick={handleVideoItemClick}
           ></IconicTreeItem>
         );
       }
