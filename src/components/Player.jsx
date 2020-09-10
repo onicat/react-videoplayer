@@ -18,7 +18,6 @@ const useStyles = makeStyles({
   }
 });
 
-const Player = () => {
   const classes = useStyles();
   const videoElRef = useRef(null);
   const playerRef = useRef(null);
