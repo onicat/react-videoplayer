@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { ThemeProvider, styled } from '@material-ui/core/styles';
 
 import MainPanel from './components/MainPanel'
@@ -14,12 +14,14 @@ const PlayerContainer = styled(Box)({
 });
 
 const App = () => {
+  const [video, setVideo] = useState(null);
+  
   return (
     <React.Fragment>
       <ThemeProvider theme={theme}>
-        <MainPanel></MainPanel>
+        <MainPanel setVideo={setVideo}></MainPanel>
         <PlayerContainer>
-          <Player/>
+          <Player video={video}/>
         </PlayerContainer>
       </ThemeProvider>
     </React.Fragment>
