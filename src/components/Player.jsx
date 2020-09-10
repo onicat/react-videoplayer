@@ -18,9 +18,16 @@ const useStyles = makeStyles({
   }
 });
 
+const Player = ({video}) => {
   const classes = useStyles();
   const videoElRef = useRef(null);
   const playerRef = useRef(null);
+
+  useEffect(() => {
+    if (video === null || playerRef.current === null) return;
+    
+    playerRef.current.src({src: video});
+  }, [video]);
 
   useEffect(() => {
     playerRef.current = videojs(videoElRef.current, options);
