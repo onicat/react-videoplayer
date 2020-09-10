@@ -7,7 +7,8 @@ const options = {
   controls: true,
   loop: false,
   preload: 'auto',
-  fluid: true
+  fluid: true,
+  autoplay: false
 };
 
 const useStyles = makeStyles({
