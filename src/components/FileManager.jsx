@@ -16,7 +16,8 @@ const useStyles = makeStyles({
     height: '100%',
     padding: '24px',
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    userSelect: 'none'
   },
   divider: {
     margin: '10px 0'
