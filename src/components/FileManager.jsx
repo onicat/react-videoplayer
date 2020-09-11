@@ -81,6 +81,8 @@ const FileManager = ({setVideo}) => {
   };
 
   const renderTreeContent = (paths, currentPath) => {
+    if (paths === null) return;
+    
     const nodeContent = [];
     
     for (let [nodeName, nodeOptions] of Object.entries(paths)) {
