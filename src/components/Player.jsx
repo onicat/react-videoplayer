@@ -11,18 +11,43 @@ const options = {
   autoplay: false
 };
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   root: {
     height: '70%',
     width: '70%',
     paddingTop: '20px',
+  },
+  dropZone: {
+    boxShadow: `0 0 5px 5px ${theme.palette.primary.main}`
   }
-});
+}));
 
 const Player = ({video, setVideo}) => {
   const classes = useStyles();
   const videoElRef = useRef(null);
   const playerRef = useRef(null);
+
+  const handleFileDragLeave = () => {
+    playerRef.current.removeClass(classes.dropZone);
+  }
+
+  const handleFileDragOver = (event) => {
+    event.preventDefault();
+    
+    playerRef.current.addClass(classes.dropZone);
+    event.dataTransfer.dropEffect = "move";
+  };
+
+  const handleFileDrop = (event) => {
+    event.preventDefault();
+
+    playerRef.current.removeClass(classes.dropZone);
+
+    const file = event.dataTransfer.files[0];
+    const url = URL.createObjectURL(file);
+
+    setVideo({src: url, type: file.type});
+  };
 
   useEffect(() => {
     if (video === null || playerRef.current === null) return;
@@ -39,8 +64,14 @@ const Player = ({video, setVideo}) => {
   }, []);
 
   return (
-    <div  className={classes.root}>
-      <video ref={videoElRef} className={'video-js'}/>
+    <div className={classes.root}>
+      <video 
+        ref={videoElRef} 
+        className={'video-js'}
+        onDragOver={handleFileDragOver}
+        onDrop={handleFileDrop}
+        onDragLeave={handleFileDragLeave}  
+      />
     </div>
   );
 }
