@@ -16,12 +16,20 @@ const PlayerContainer = styled(Box)({
 const App = () => {
   const [video, setVideo] = useState(null);
   
+  const setVideoWithReset = (nextVideo) => {
+    if (video !== null) {
+      URL.revokeObjectURL(video.src);
+    }
+    
+    setVideo(nextVideo);
+  };
+
   return (
     <React.Fragment>
       <ThemeProvider theme={theme}>
-        <MainPanel setVideo={setVideo}></MainPanel>
+        <MainPanel setVideo={setVideoWithReset}></MainPanel>
         <PlayerContainer>
-          <Player video={video}/>
+          <Player video={video} setVideo={setVideoWithReset}/>
         </PlayerContainer>
       </ThemeProvider>
     </React.Fragment>

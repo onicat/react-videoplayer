@@ -47,7 +47,7 @@ const IconicTreeItem = ({
   return (
     <TreeItem
       onDoubleClick={
-        (type !== 'folder') ? () => handleVideoItemClick(path) : null
+        (type !== 'folder') ? () => handleVideoItemClick(path, type) : null
       }
       label={
         <div className={classes.iconicTreeItemLabel}>
@@ -75,8 +75,8 @@ const FileManager = ({setVideo}) => {
   
   let content = null; 
 
-  const handleVideoItemClick = (path) => {
-    setVideo(urlCreator.videos(SEARCH_PARAMS.PATH, path));
+  const handleVideoItemClick = (path, type) => {
+    setVideo({src: urlCreator.videos(SEARCH_PARAMS.PATH, path), type});
   };
 
   const renderTreeContent = (paths, currentPath) => {
