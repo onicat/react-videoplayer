@@ -66,7 +66,7 @@ const FileManager = ({setVideo}) => {
 
     setUploads(uploads => ({
       ...uploads,
-      [file.name]: {
+      [virtualFilePath]: {
         progress: 0,
         xhr
       }
@@ -75,7 +75,7 @@ const FileManager = ({setVideo}) => {
     xhr.upload.onprogress = event => {
       setUploads(uploads => ({
         ...uploads,
-        [file.name]: {
+        [virtualFilePath]: {
           progress: 100 * event.loaded / event.total,
           xhr
         }

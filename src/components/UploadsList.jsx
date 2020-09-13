@@ -1,4 +1,5 @@
 import { Box, Button, LinearProgress, List, ListItem, makeStyles, Popper, Typography } from '@material-ui/core';
+import truncStringFromEnd from 'logic/truncStringFromEnd';
 import React from 'react'
 
 const useStyles = makeStyles(theme => ({
@@ -37,8 +38,8 @@ const UploadsList = ({uploads, setUploads, ...props}) => {
       content.push(
         <ListItem key={name}>
           <Box className={classes.optionsBox}>
-            <Typography color='textPrimary' variant='body2'>
-              {name}
+            <Typography title={name} color='textPrimary' variant='body2'>
+              {(name.length > 19) ? truncStringFromEnd(name, 19) : name}
             </Typography>
             <LinearProgress 
               className={classes.progress}
