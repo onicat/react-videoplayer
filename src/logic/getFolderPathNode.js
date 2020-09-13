@@ -1,7 +1,7 @@
-const getFolderPathNode = (folderPath, paths) => {
-  if (folderPath.length === 0) return paths;
+const getFolderPathNode = (virtualFolderPath, paths) => {
+  if (virtualFolderPath.length === 0) return paths;
   
-  const pathStack = folderPath.split('/');
+  const pathStack = virtualFolderPath.split('/');
   let currentNode = paths[pathStack[0]];
 
   for (let depth = 1; depth < pathStack.length; depth++) {
