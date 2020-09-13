@@ -1,15 +1,13 @@
 import React, { useEffect, useState, useRef } from 'react'
 import TreeView from '@material-ui/lab/TreeView'
-import TreeItem from '@material-ui/lab/TreeItem'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import { makeStyles, Typography, CircularProgress, Divider, Paper, Button } from '@material-ui/core';
-import FolderIcon from '@material-ui/icons/Folder';
-import MovieIcon from '@material-ui/icons/Movie';
 
 import urlCreator from 'logic/urlCreator';
 import { SEARCH_PARAMS } from 'logic/constants';
 import UploadsList from './UploadsList';
+import IconicPathsTreeItem from './IconicPathsTreeItem';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -27,13 +25,6 @@ const useStyles = makeStyles(theme => ({
   progress: {
     margin: '30% auto'
   },
-  iconicTreeItemLabel: {
-    display: 'flex',
-    alignItems: 'center'
-  },
-  iconicTreeItemText: {
-    paddingLeft: '10px'
-  },
   dropZone: {
     backgroundColor: theme.palette.primary.main
   },
@@ -41,41 +32,6 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1
   }
 }));
-
-const IconicTreeItem = ({
-  nodeType,
-  text,
-  children,
-  virtualPath,
-  handleVideoItemClick,
-  ...props
-}) => {
-  const classes = useStyles();
-  const icon = (nodeType === 'folder') ? <FolderIcon/> : <MovieIcon/>;
-
-  return (
-    <TreeItem
-      onDoubleClick={
-        (nodeType !== 'folder') ? () => handleVideoItemClick(virtualPath, nodeType) : null
-      }
-      label={
-        <div className={classes.iconicTreeItemLabel}>
-          {icon}
-          <Typography 
-            variant='body2'
-            className={classes.iconicTreeItemText}
-          >
-            {text}
-          </Typography>
-        </div>
-      }
-      nodeId={virtualPath}
-      {...props}
-    >
-      {children}
-    </TreeItem>
-  )
-};
 
 const FileManager = ({setVideo}) => {
   const classes = useStyles();
@@ -160,7 +116,7 @@ const FileManager = ({setVideo}) => {
       
       if (nodeOptions.type === 'folder') {
         nodeContent.push(
-          <IconicTreeItem 
+          <IconicPathsTreeItem 
             text={nodeName}
             nodeType={nodeOptions.type}
             virtualPath={nodePath}
@@ -170,17 +126,17 @@ const FileManager = ({setVideo}) => {
             onDragLeave={handleFileDragLeave} 
           >
             {renderTreeContent(nodeOptions.paths, nodePath)}
-          </IconicTreeItem>
+          </IconicPathsTreeItem>
         );
       } else {
         nodeContent.push(
-          <IconicTreeItem
+          <IconicPathsTreeItem
             text={nodeName}
             nodeType={nodeOptions.type}
             virtualPath={nodePath}
             key={nodePath}
             handleVideoItemClick={handleVideoItemClick}
-          ></IconicTreeItem>
+          ></IconicPathsTreeItem>
         );
       }
     }
