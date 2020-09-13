@@ -3,12 +3,13 @@ import TreeView from '@material-ui/lab/TreeView'
 import TreeItem from '@material-ui/lab/TreeItem'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import { makeStyles, Typography, CircularProgress, Divider, Paper } from '@material-ui/core';
+import { makeStyles, Typography, CircularProgress, Divider, Paper, Button } from '@material-ui/core';
 import FolderIcon from '@material-ui/icons/Folder';
 import MovieIcon from '@material-ui/icons/Movie';
 
 import urlCreator from 'logic/urlCreator';
 import { SEARCH_PARAMS } from 'logic/constants';
+import UploadsList from './UploadsList';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -79,9 +80,16 @@ const IconicTreeItem = ({
 const FileManager = ({setVideo, sendVideoFileToServer}) => {
   const classes = useStyles();
   const [responseOkStatus, changeResponseOkStatus] = useState(null);
+  const [uploads, setUploads] = useState({});
+  const [uploadsListOpen, setUploadsListOpen] = useState(false);
   const [paths, setPaths] = useState(null);
+  const uploadsButtonAnchorRef = useRef(null);
   
   let content = null; 
+
+  const toggleUploadsList = () => {
+    setUploadsListOpen(!uploadsListOpen);
+  };
 
   const handleVideoItemClick = (path, type) => {
     setVideo({src: urlCreator.videos(SEARCH_PARAMS.PATH, path), type});
@@ -194,6 +202,18 @@ const FileManager = ({setVideo, sendVideoFileToServer}) => {
       </Typography>
       <Divider className={classes.divider}/>
       {content}
+      <Button 
+        onClick={toggleUploadsList}
+        ref={uploadsButtonAnchorRef}
+      >
+        Uploads
+      </Button>
+      <UploadsList 
+        anchorEl={uploadsButtonAnchorRef.current}
+        open={uploadsListOpen}
+        uploads={uploads}
+        setUploads={setUploads}
+      />
     </Paper>
   )
 };
