@@ -3,11 +3,13 @@ import TreeView from '@material-ui/lab/TreeView'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import { makeStyles, Typography, CircularProgress, Divider, Paper, Button } from '@material-ui/core';
+import produce from 'immer';
 
 import urlCreator from 'logic/urlCreator';
 import { SEARCH_PARAMS } from 'logic/constants';
 import UploadsList from './UploadsList';
 import IconicPathsTreeItem from './IconicPathsTreeItem';
+import getFolderPathNode from 'logic/getFolderPathNode';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -77,6 +79,17 @@ const FileManager = ({setVideo}) => {
           progress: 100 * event.loaded / event.total,
           xhr
         }
+      }));
+    };
+
+    xhr.upload.onload = () => {
+      setPaths(produce(draftPaths => {
+        const fileNode = getFolderPathNode(virtualFolderPath, draftPaths);
+
+        fileNode[file.name] = {
+          type: file.type,
+          paths: null
+        };
       }));
     };
 
