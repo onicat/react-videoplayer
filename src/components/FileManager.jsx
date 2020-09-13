@@ -79,7 +79,7 @@ const IconicTreeItem = ({
 const FileManager = ({setVideo, sendVideoFileToServer}) => {
   const classes = useStyles();
   const [responseOkStatus, changeResponseOkStatus] = useState(null);
-  const pathsRef = useRef(null);
+  const [paths, setPaths] = useState(null);
   
   let content = null; 
 
@@ -154,7 +154,7 @@ const FileManager = ({setVideo, sendVideoFileToServer}) => {
         return response.json();
       })
       .then(paths => {
-        pathsRef.current = paths;
+        setPaths(paths);
         changeResponseOkStatus(true);
       })
       .catch(() => {
@@ -176,7 +176,7 @@ const FileManager = ({setVideo, sendVideoFileToServer}) => {
         onDrop={handleFileDrop.bind(null, '')}
         onDragLeave={handleFileDragLeave} 
       >
-        {renderTreeContent(pathsRef.current)}
+        {renderTreeContent(paths)}
       </TreeView>
     )
   } else {
