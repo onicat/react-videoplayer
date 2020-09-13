@@ -10,7 +10,7 @@ import MovieIcon from '@material-ui/icons/Movie';
 import urlCreator from 'logic/urlCreator';
 import { SEARCH_PARAMS } from 'logic/constants';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   root: {
     width: '300px',
     height: '100%',
@@ -31,8 +31,14 @@ const useStyles = makeStyles({
   },
   iconicTreeItemText: {
     paddingLeft: '10px'
+  },
+  dropZone: {
+    backgroundColor: theme.palette.primary.main
+  },
+  tree: {
+    flexGrow: 1
   }
-});
+}));
 
 const IconicTreeItem = ({
   type,
@@ -69,7 +75,7 @@ const IconicTreeItem = ({
   )
 };
 
-const FileManager = ({setVideo}) => {
+const FileManager = ({setVideo, sendVideoFileToServer}) => {
   const classes = useStyles();
   const [responseOkStatus, changeResponseOkStatus] = useState(null);
   const pathsRef = useRef(null);
@@ -78,6 +84,29 @@ const FileManager = ({setVideo}) => {
 
   const handleVideoItemClick = (path, type) => {
     setVideo({src: urlCreator.videos(SEARCH_PARAMS.PATH, path), type});
+  };
+
+  const handleFileDragLeave = (event) => {
+    event.currentTarget.classList.remove(classes.dropZone);
+  }
+
+  const handleFileDragOver = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    
+    event.currentTarget.classList.add(classes.dropZone);
+    event.dataTransfer.dropEffect = "move";
+  };
+
+  const handleFileDrop = (folderPath, event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    event.currentTarget.classList.remove(classes.dropZone);
+
+    const file = event.dataTransfer.files[0];
+    const path = (folderPath.length === 0) ? file.name : `${folderPath}/${file.name}`;
+
+    sendVideoFileToServer(file, path);
   };
 
   const renderTreeContent = (paths, currentPath) => {
@@ -95,6 +124,9 @@ const FileManager = ({setVideo}) => {
             type={nodeOptions.type}
             path={nodePath}
             key={nodePath}
+            onDragOver={handleFileDragOver}
+            onDrop={handleFileDrop.bind(null, nodePath)}
+            onDragLeave={handleFileDragLeave} 
           >
             {renderTreeContent(nodeOptions.paths, nodePath)}
           </IconicTreeItem>
@@ -136,8 +168,12 @@ const FileManager = ({setVideo}) => {
   } else if (responseOkStatus === true) {
     content = (
       <TreeView
+        className={classes.tree}
         defaultCollapseIcon={<ExpandMoreIcon />}
         defaultExpandIcon={<ChevronRightIcon />}
+        onDragOver={handleFileDragOver}
+        onDrop={handleFileDrop.bind(null, '')}
+        onDragLeave={handleFileDragLeave} 
       >
         {renderTreeContent(pathsRef.current)}
       </TreeView>

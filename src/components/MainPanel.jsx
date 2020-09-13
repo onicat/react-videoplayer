@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const MainPanel = ({setVideo}) => {
+const MainPanel = ({setVideo, sendVideoFileToServer}) => {
   const classes = useStyles();
   const [isFileManagerVisible, toggleFileManagerDrawer] = useState(false);
 
@@ -58,7 +58,10 @@ const MainPanel = ({setVideo}) => {
           open={isFileManagerVisible}
           onClose={toggleFileManagerDrawer.bind(null, false)}
         >
-          <FileManager setVideo={setVideo}/>
+          <FileManager 
+            sendVideoFileToServer={sendVideoFileToServer}
+            setVideo={setVideo}
+          />
         </Drawer>
       </Toolbar>
     </AppBar>
