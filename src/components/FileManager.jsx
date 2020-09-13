@@ -47,9 +47,16 @@ const FileManager = ({setVideo}) => {
     setUploadsListOpen(!uploadsListOpen);
   };
 
-  const sendVideoFileToServer = (file, virtualFilePath) => {
+  const sendVideoFileToServer = (file, virtualFolderPath) => {
     const formData = new FormData();
     const xhr = new XMLHttpRequest();
+    const virtualFilePath = (() => {
+      if (virtualFolderPath === '') {
+        return file.name;
+      } else {
+        return `${virtualFolderPath}/${file.name}`
+      }
+    })();
 
     formData.append('video', file);
     
@@ -95,15 +102,14 @@ const FileManager = ({setVideo}) => {
     event.dataTransfer.dropEffect = "move";
   };
 
-  const handleFileDrop = (folderPath, event) => {
+  const handleFileDrop = (virtualFolderPath, event) => {
     event.preventDefault();
     event.stopPropagation();
     event.currentTarget.classList.remove(classes.dropZone);
 
     const file = event.dataTransfer.files[0];
-    const virtualFilePath = (folderPath.length === 0) ? file.name : `${folderPath}/${file.name}`;
 
-    sendVideoFileToServer(file, virtualFilePath);
+    sendVideoFileToServer(file, virtualFolderPath);
   };
 
   const renderTreeContent = (paths, currentVirtualPath) => {
