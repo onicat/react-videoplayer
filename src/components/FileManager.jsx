@@ -77,7 +77,7 @@ const IconicTreeItem = ({
   )
 };
 
-const FileManager = ({setVideo, sendVideoFileToServer}) => {
+const FileManager = ({setVideo}) => {
   const classes = useStyles();
   const [responseOkStatus, changeResponseOkStatus] = useState(null);
   const [uploads, setUploads] = useState({});
@@ -89,6 +89,35 @@ const FileManager = ({setVideo, sendVideoFileToServer}) => {
 
   const toggleUploadsList = () => {
     setUploadsListOpen(!uploadsListOpen);
+  };
+
+  const sendVideoFileToServer = (file, virtualFilePath) => {
+    const formData = new FormData();
+    const xhr = new XMLHttpRequest();
+
+    formData.append('video', file);
+    
+    xhr.open('POST', urlCreator.videos(SEARCH_PARAMS.PATH, virtualFilePath), true);
+
+    setUploads(uploads => ({
+      ...uploads,
+      [file.name]: {
+        progress: 0,
+        xhr
+      }
+    }));
+
+    xhr.upload.onprogress = event => {
+      setUploads(uploads => ({
+        ...uploads,
+        [file.name]: {
+          progress: 100 * event.loaded / event.total,
+          xhr
+        }
+      }));
+    };
+
+    xhr.send(formData);
   };
 
   const handleVideoItemClick = (path, type) => {

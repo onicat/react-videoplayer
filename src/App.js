@@ -4,8 +4,6 @@ import { ThemeProvider, styled } from '@material-ui/core/styles';
 import Player from 'components/Player'
 import theme from 'theme';
 import { Box, makeStyles, Paper } from '@material-ui/core';
-import urlCreator from 'logic/urlCreator';
-import { SEARCH_PARAMS } from 'logic/constants';
 import FileManager from 'components/FileManager';
 
 const useStyles = makeStyles({
@@ -39,22 +37,11 @@ const App = () => {
     setVideo(nextVideo);
   };
 
-  const sendVideoFileToServer = (file, path) => {
-    const formData = new FormData();
-    const xhr = new XMLHttpRequest();
-
-    formData.append('video', file);
-    
-    xhr.open('POST', urlCreator.videos(SEARCH_PARAMS.PATH, path), true);
-
-    xhr.send(formData);
-  };
-
   return (
     <ThemeProvider theme={theme}>
       <div className={classes.root}>
         <Paper className={classes.fileManagerContainer}>
-          <FileManager setVideo={setVideoWithReset} sendVideoFileToServer={sendVideoFileToServer}/>
+          <FileManager setVideo={setVideoWithReset}/>
         </Paper>
         <PlayerContainer>
           <Player video={video} setVideo={setVideoWithReset}/>
