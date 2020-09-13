@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { ThemeProvider, styled } from '@material-ui/core/styles';
 
-import MainPanel from './components/MainPanel'
 import Player from 'components/Player'
 import theme from 'theme';
 import { Box } from '@material-ui/core';
@@ -40,10 +39,6 @@ const App = () => {
   return (
     <React.Fragment>
       <ThemeProvider theme={theme}>
-        <MainPanel 
-          sendVideoFileToServer={sendVideoFileToServer}
-          setVideo={setVideoWithReset}
-        ></MainPanel>
         <PlayerContainer>
           <Player video={video} setVideo={setVideoWithReset}/>
         </PlayerContainer>
