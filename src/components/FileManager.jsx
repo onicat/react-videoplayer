@@ -43,20 +43,20 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const IconicTreeItem = ({
-  type,
+  nodeType,
   text,
   children,
-  path,
+  virtualPath,
   handleVideoItemClick,
   ...props
 }) => {
   const classes = useStyles();
-  const icon = (type === 'folder') ? <FolderIcon/> : <MovieIcon/>;
+  const icon = (nodeType === 'folder') ? <FolderIcon/> : <MovieIcon/>;
 
   return (
     <TreeItem
       onDoubleClick={
-        (type !== 'folder') ? () => handleVideoItemClick(path, type) : null
+        (nodeType !== 'folder') ? () => handleVideoItemClick(virtualPath, nodeType) : null
       }
       label={
         <div className={classes.iconicTreeItemLabel}>
@@ -69,7 +69,7 @@ const IconicTreeItem = ({
           </Typography>
         </div>
       }
-      nodeId={path}
+      nodeId={virtualPath}
       {...props}
     >
       {children}
@@ -120,8 +120,11 @@ const FileManager = ({setVideo}) => {
     xhr.send(formData);
   };
 
-  const handleVideoItemClick = (path, type) => {
-    setVideo({src: urlCreator.videos(SEARCH_PARAMS.PATH, path), type});
+  const handleVideoItemClick = (virtualFilePath, videoMIMEType) => {
+    setVideo({
+      src: urlCreator.videos(SEARCH_PARAMS.PATH, virtualFilePath),
+      type: videoMIMEType
+    });
   };
 
   const handleFileDragLeave = (event) => {
@@ -142,25 +145,25 @@ const FileManager = ({setVideo}) => {
     event.currentTarget.classList.remove(classes.dropZone);
 
     const file = event.dataTransfer.files[0];
-    const path = (folderPath.length === 0) ? file.name : `${folderPath}/${file.name}`;
+    const virtualFilePath = (folderPath.length === 0) ? file.name : `${folderPath}/${file.name}`;
 
-    sendVideoFileToServer(file, path);
+    sendVideoFileToServer(file, virtualFilePath);
   };
 
-  const renderTreeContent = (paths, currentPath) => {
+  const renderTreeContent = (paths, currentVirtualPath) => {
     if (paths === null) return;
     
     const nodeContent = [];
     
     for (let [nodeName, nodeOptions] of Object.entries(paths)) {
-      const nodePath = (currentPath) ? `${currentPath}/${nodeName}` : nodeName;
+      const nodePath = (currentVirtualPath) ? `${currentVirtualPath}/${nodeName}` : nodeName;
       
       if (nodeOptions.type === 'folder') {
         nodeContent.push(
           <IconicTreeItem 
             text={nodeName}
-            type={nodeOptions.type}
-            path={nodePath}
+            nodeType={nodeOptions.type}
+            virtualPath={nodePath}
             key={nodePath}
             onDragOver={handleFileDragOver}
             onDrop={handleFileDrop.bind(null, nodePath)}
@@ -173,8 +176,8 @@ const FileManager = ({setVideo}) => {
         nodeContent.push(
           <IconicTreeItem
             text={nodeName}
-            type={nodeOptions.type}
-            path={nodePath}
+            nodeType={nodeOptions.type}
+            virtualPath={nodePath}
             key={nodePath}
             handleVideoItemClick={handleVideoItemClick}
           ></IconicTreeItem>
