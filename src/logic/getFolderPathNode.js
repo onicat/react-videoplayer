@@ -1,7 +1,7 @@
-const getPathNode = (path, paths) => {
-  if (path.length === 0) return paths;
+const getFolderPathNode = (folderPath, paths) => {
+  if (folderPath.length === 0) return paths;
   
-  const pathStack = path.split('/');
+  const pathStack = folderPath.split('/');
   let currentNode = paths[pathStack[0]];
 
   for (let depth = 1; depth < pathStack.length; depth++) {
@@ -11,4 +11,4 @@ const getPathNode = (path, paths) => {
   return currentNode;
 };
 
-export default getPathNode;
+export default getFolderPathNode;
