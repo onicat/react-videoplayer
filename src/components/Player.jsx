@@ -13,9 +13,10 @@ const options = {
 
 const useStyles = makeStyles(theme => ({
   root: {
-    height: '70%',
-    width: '70%',
-    paddingTop: '20px',
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)'
   },
   dropZone: {
     boxShadow: `0 0 5px 5px ${theme.palette.primary.main}`
@@ -64,15 +65,13 @@ const Player = ({video, setVideo}) => {
   }, []);
 
   return (
-    <div className={classes.root}>
-      <video 
-        ref={videoElRef} 
-        className={'video-js'}
-        onDragOver={handleFileDragOver}
-        onDrop={handleFileDrop}
-        onDragLeave={handleFileDragLeave}  
-      />
-    </div>
+    <video 
+      ref={videoElRef} 
+      className={`${classes.root} video-js`}
+      onDragOver={handleFileDragOver}
+      onDrop={handleFileDrop}
+      onDragLeave={handleFileDragLeave}  
+    />
   );
 }
 

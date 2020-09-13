@@ -3,7 +3,7 @@ import TreeView from '@material-ui/lab/TreeView'
 import TreeItem from '@material-ui/lab/TreeItem'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import { makeStyles, Box, Typography, CircularProgress, Divider } from '@material-ui/core';
+import { makeStyles, Typography, CircularProgress, Divider, Paper } from '@material-ui/core';
 import FolderIcon from '@material-ui/icons/Folder';
 import MovieIcon from '@material-ui/icons/Movie';
 
@@ -15,6 +15,7 @@ const useStyles = makeStyles(theme => ({
     width: '300px',
     height: '100%',
     padding: '24px',
+    boxSizing: 'border-box',
     display: 'flex',
     flexDirection: 'column',
     userSelect: 'none'
@@ -187,13 +188,13 @@ const FileManager = ({setVideo, sendVideoFileToServer}) => {
   }
 
   return (
-    <Box className={classes.root}>
+    <Paper className={classes.root}>
       <Typography variant='h5'>
         File Manager
       </Typography>
       <Divider className={classes.divider}/>
       {content}
-    </Box>
+    </Paper>
   )
 };
 

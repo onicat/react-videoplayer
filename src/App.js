@@ -3,18 +3,32 @@ import { ThemeProvider, styled } from '@material-ui/core/styles';
 
 import Player from 'components/Player'
 import theme from 'theme';
-import { Box } from '@material-ui/core';
+import { Box, makeStyles, Paper } from '@material-ui/core';
 import urlCreator from 'logic/urlCreator';
 import { SEARCH_PARAMS } from 'logic/constants';
+import FileManager from 'components/FileManager';
+
+const useStyles = makeStyles({
+  root: {
+    height: '100%',
+    display: 'flex',
+    alignItems: 'center'
+  },
+  fileManagerContainer: {
+    height: '100%'
+  }
+});
 
 const PlayerContainer = styled(Box)({
-  height: 'calc(100vh - 64px)',
-  paddingTop: '64px',
-  display: 'flex',
-  justifyContent: 'center',
+  height: '100%',
+  margin: '0 48px',
+  boxSizing: 'border-box',
+  flexGrow: 1,
+  position: 'relative',
 });
 
 const App = () => {
+  const classes = useStyles();
   const [video, setVideo] = useState(null);
   
   const setVideoWithReset = (nextVideo) => {
@@ -37,13 +51,16 @@ const App = () => {
   };
 
   return (
-    <React.Fragment>
-      <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
+      <div className={classes.root}>
+        <Paper className={classes.fileManagerContainer}>
+          <FileManager setVideo={setVideoWithReset} sendVideoFileToServer={sendVideoFileToServer}/>
+        </Paper>
         <PlayerContainer>
           <Player video={video} setVideo={setVideoWithReset}/>
         </PlayerContainer>
-      </ThemeProvider>
-    </React.Fragment>
+      </div>
+    </ThemeProvider>
   );
 }
 
